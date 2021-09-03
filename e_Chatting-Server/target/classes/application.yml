@@ -1,0 +1,13 @@
+
+spring:
+  application:
+    name: chat-api
+
+server:
+  port: 8001
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.123.104:8761/eureka/
+
