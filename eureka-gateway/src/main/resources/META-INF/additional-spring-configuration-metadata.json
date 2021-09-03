@@ -1,0 +1,22 @@
+{"properties": [
+  {
+    "name": "eureka.cloud.gateway.globalcors.cors-configurations.[/**].allowed-origins",
+    "type": "java.lang.String",
+    "description": "A description for 'eureka.cloud.gateway.globalcors.cors-configurations.[/**].allowed-origins'"
+  },
+  {
+    "name": "eureka.application.name",
+    "type": "java.lang.String",
+    "description": "A description for 'eureka.application.name'"
+  },
+  {
+    "name": "eureka.cloud.gateway.globalcors.cors-configurations.[/**].allowedMethods",
+    "type": "java.lang.String",
+    "description": "A description for 'eureka.cloud.gateway.globalcors.cors-configurations.[/**].allowedMethods'"
+  },
+  {
+    "name": "eureka.cloud.gateway.routes",
+    "type": "java.lang.String",
+    "description": "A description for 'eureka.cloud.gateway.routes'"
+  }
+]}

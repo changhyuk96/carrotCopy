@@ -1,0 +1,31 @@
+
+spring:
+  application:
+    name: gateway-service
+    
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: http://localhost:8000/
+            allowedMethods: POST, GET, PUT, DELETE
+
+    
+server:
+  port: 8090
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+eureka:
+  client:
+    fetch-registry: true 
+    register-with-eureka: true # 자기 자신을 Eureka Server에 서비스로 등록
+    service-url:
+      defaultZone: http://192.168.123.104:8761/eureka
+  application:
+    name: gateway-service
+    

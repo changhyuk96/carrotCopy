@@ -1,0 +1,21 @@
+
+
+spring:
+  application:
+    name: auth-server
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.123.104:1521/orcl
+    username: eureka_user
+    password: eureka123!
+
+server:
+  port: 8010
+
+# VO location
+mybatis:
+  type-aliases-package: src.test.auth.data
+
+# XML location
+  mapper-locations:
+  - classpath:mappers/**/*.xml

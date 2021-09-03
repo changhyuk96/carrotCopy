@@ -1,0 +1,25 @@
+
+server:
+  port: 8000
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/view/
+      suffix: .jsp
+    static-path-pattern: resources/static/**
+  servlet:
+    multipart: 
+      location: C:\Users\leech\git\msatest\mainWeb\src\main\resources\static\images
+      max-file-size: 10MB
+      max-request-size: 50MB
+        
+         
+    
+    
+    
