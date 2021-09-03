@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="src.test.product.data.ProductDAO">
+    <select id="getProductList" resultType="ProductDTO">
+        SELECT * from PRODUCT
+    </select>
+    
+    <select id="getProduct" resultType="ProductDTO" >
+        SELECT * from PRODUCT
+        WHERE P_ID = #{p_id}
+    </select>
+    
+    <insert id="createProduct">
+    	INSERT INTO PRODUCT
+    	VALUES 
+    		(
+    			product_id_seq.nextval
+    			,#{p_title}
+    			,#{p_content}
+    			,to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
+    			,#{p_username}
+    			,#{p_price}
+    		)
+    </insert>
+    
+    <update id="updateProduct">
+    	UPDATE PRODUCT 
+    	SET
+   			 p_title 	= 	#{p_title}
+   			,p_content  = 	#{p_content}
+   			,p_username =	#{p_username}
+   			,p_price	=	#{p_price}
+    	WHERE
+   			p_ID		=	#{p_id}
+    </update>
+    
+    <delete id="deleteProduct">
+    	DELETE FROM PRODUCT 
+    	WHERE
+    		P_ID = #{p_id}
+    </delete>
+    
+</mapper>

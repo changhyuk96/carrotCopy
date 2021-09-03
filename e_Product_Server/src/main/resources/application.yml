@@ -1,0 +1,44 @@
+
+
+spring:
+  application:
+    name: product-api
+  
+  # Oracle JDBC
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521/orcl
+    username: product_admin
+    password: 123123
+    
+# 첨부파일 저장 경로 설정 :: spring.servlet.multipart.location
+  servlet:
+    multipart:
+      location: C:\Users\leech\eclipse-workspace\e_Product_Server\src\main\resources\static\images
+      max-file-size: 10MB
+      
+# Encoding 설정 :: server.servlet.endoing.charset      
+server:
+  port: 8002
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+      
+# Eureka Client가 서비스를 등록한 서버 주소 지정 :: eureka.client.service-url.defaultZone
+eureka:
+  client:
+    service-url: 
+      defaultZone: http://localhost:8761/eureka/
+
+mybatis:
+  type-aliases-package: src.test.product.data
+  mapper-locations:
+  - classpath:mappers/**/*.xml
+
+  
+
+
+
+
