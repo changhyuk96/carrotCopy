@@ -51,7 +51,7 @@ public class authController {
 					
 					// 암호화된 Pass와 입력한 pass가 일치하면 토큰 생성
 					if(passEncoder.matches(request.getHeader("u_password"), userInfo.getPassword())) {
-						jwtToken = jwtBuilder.generateToken(userInfo.getU_id());
+						jwtToken = jwtBuilder.generateToken(userInfo);
 					}
 					else
 						return ResponseEntity.ok().body("패스워드가 일치하지 않습니다.");

@@ -1,4 +1,4 @@
-package src.test.auth.data;
+package src.test.web.util;
 
 import java.util.Collection;
 

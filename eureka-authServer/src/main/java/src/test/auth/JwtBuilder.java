@@ -11,6 +11,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import src.test.auth.data.userVO;
 
 @Configuration
 public class JwtBuilder {
@@ -39,19 +40,20 @@ public class JwtBuilder {
 	}
 	
 	// Access 토큰 생성
-	public String generateToken(String userId) {
+	public String generateToken(userVO userInfo) {
 		
-		Claims claims = Jwts.claims().setSubject(userId);
+		Claims claims = Jwts.claims().setSubject(userInfo.getU_id());
 		long nowTime = System.currentTimeMillis();
 		long expiryTime = nowTime + jwtTokenValidation;
-		
+
+		userInfo.setU_password(null);
 	    return Jwts.builder()
 	    		.setClaims(claims) // 정보 저장
 	    		.setIssuedAt(new Date(nowTime)) // 토큰 발행 시간
-	    		.setSubject(userId) // 
 	    		.setExpiration(new Date(expiryTime)) // 토큰 만료 시간
+	    		.claim("u_id", userInfo.getU_id())
+	    		.claim("u_username", userInfo.getUsername())
 	    		.signWith(SignatureAlgorithm.HS512, secret_key).compact();
-		
 		
 	}
 	

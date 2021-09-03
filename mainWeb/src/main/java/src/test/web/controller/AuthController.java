@@ -2,8 +2,6 @@ package src.test.web.controller;
 
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.util.NoSuchElementException;
-import java.util.stream.Stream;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -16,15 +14,19 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.StringHttpMessageConverter;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import io.jsonwebtoken.Claims;
 import src.test.web.util.ServiceUtil;
+import src.test.web.util.userVO;
 
 @RestController
 public class AuthController {
@@ -36,6 +38,8 @@ public class AuthController {
 	ServiceUtil serviceUtil;
 	
 	RestTemplate restTemplate = new RestTemplate();
+	
+	ObjectMapper mapper = new ObjectMapper();
 
 	@PostMapping("/loginAction")
 	public Object loginAction(HttpServletRequest request, HttpServletResponse response) {
@@ -46,19 +50,34 @@ public class AuthController {
 		headers.add("u_password", request.getParameter("u_password"));
 		
 		HttpEntity<?> requests = new HttpEntity<>(headers);
-		URI url = URI.create("http://localhost:8090/auth/login");
+		URI url = URI.create("http://localhost:8010/login");
 		
 		ResponseEntity<?> responseEntity = restTemplate.exchange(url, HttpMethod.POST, requests, String.class);
-		
 		
 		if(!responseEntity.hasBody()) {
 			Cookie cookie = new Cookie("jwtToken", responseEntity.getHeaders().getFirst("jwtToken"));
 			
-			cookie.setMaxAge(2*60);
+			
+			String jwt = cookie.getValue();
+			System.out.println("token :::"+ jwt);
+			
+			Claims claims = serviceUtil.getClaims(jwt);
+			userVO userinfo = new userVO();
+			userinfo.setU_id(claims.get("u_id").toString());
+			userinfo.setU_name(claims.get("u_username").toString());
+			userinfo.setAuthorities(null);
+			
+			SecurityContext sc = SecurityContextHolder.getContext();
+			sc.setAuthentication(new UsernamePasswordAuthenticationToken(userinfo,null,userinfo.getAuthorities()));
+			
+			System.out.println(sc.getAuthentication().getName());
+			
+			cookie.setMaxAge(20*60);
 			cookie.setSecure(true);
 			cookie.setHttpOnly(true);
 			
 			response.addCookie(cookie);
+			
 		}
 		
 		return ResponseEntity.ok().body(responseEntity.getBody());
