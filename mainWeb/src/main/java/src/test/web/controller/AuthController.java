@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -97,5 +98,10 @@ public class AuthController {
 		ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requests, String.class);
 		
 		return response.getBody();
+	}
+	
+	@RequestMapping("/test")
+	public Object test(HttpServletRequest request) {
+		return "HTTP test";
 	}
 }
