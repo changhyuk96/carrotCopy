@@ -13,7 +13,7 @@ import lombok.Setter;
 public class userVO implements UserDetails {
 
 	private String u_id;
-	private String u_name;
+	private String u_nickname;
 	private String u_password;
 	private String u_reg_date;
 	private Collection<GrantedAuthority> authorities;

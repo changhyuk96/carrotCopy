@@ -23,7 +23,6 @@ import src.test.product.data.ProductDTO;
 import src.test.product.data.ProductService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:8000/")
 public class ProductController {
 
 	@Autowired
@@ -49,16 +48,7 @@ public class ProductController {
 	@PostMapping("/product")
 	public Object createProduct(ProductDTO productDTO) {
 		
-		try {
-			System.out.println(mapper.writeValueAsString(productDTO));
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		int result = productService.createProduct(productDTO);
-		
-		
 		
 		return result >= 1 ? "상품이 등록되었습니다." : "상품 등록에 실패했습니다.";
 	}
@@ -81,30 +71,29 @@ public class ProductController {
 	
 	// 첨부파일
 	@PostMapping("/product/file")
-	public Object insertProductFile(ProductAttachFileDTO productAttchFileDTO, @RequestParam MultipartFile[] uploadFile) {
-		
+	public Object insertProductFile(ProductAttachFileDTO productAttchFileDTO, @RequestParam("files") MultipartFile[] uploadFile){
 		
 		int result = 0;
 		for(MultipartFile multiFile : uploadFile) {
 			
 			if(!multiFile.isEmpty()) {
-				
+				try {
 				productAttchFileDTO.setP_uuid(UUID.randomUUID().toString());
 				productAttchFileDTO.setP_originalName(multiFile.getOriginalFilename());
 				
-				File file = new File(productAttchFileDTO.getP_originalName() +"_"+ productAttchFileDTO.getP_uuid());
+				File file = new File(productAttchFileDTO.getP_uuid()+"_"+productAttchFileDTO.getP_originalName() );
 				
-				try {
-					multiFile.transferTo(file);
-					result = productService.insertFile(productAttchFileDTO);
+				multiFile.transferTo(file);
+				result = productService.insertFile(productAttchFileDTO);
 
-
-				} catch (IllegalStateException | IOException e) {
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} 
 			}
 		}
+		
+		System.out.println("성고오옹");
 		
 		return result >= 1 ? "success" : "failed";
 	}

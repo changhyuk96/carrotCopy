@@ -58,7 +58,7 @@ public class authController {
 				}else
 					return ResponseEntity.ok().body("존재하지 않는 아이디입니다.");
 				
-				logger.info( LocalDate.now() + userInfo.getU_id()+" :: jwt Token 발급");
+				logger.info( LocalDate.now() + " [ "+userInfo.getU_id()+" ] :: jwt Token 발급");
 				return ResponseEntity.ok().header("jwtToken", jwtToken).body(null);
 			}
 			
@@ -89,7 +89,7 @@ public class authController {
 		HashMap<String, String> map = new HashMap<String, String>();
 		
 		map.put("u_id", request.getParameter("u_id"));
-		map.put("u_name", request.getParameter("u_name"));
+		map.put("u_nickname", request.getParameter("u_nickname"));
 		map.put("u_password", passEncoder.encode(request.getParameter("u_password")));
 		int result =0;
 		try {

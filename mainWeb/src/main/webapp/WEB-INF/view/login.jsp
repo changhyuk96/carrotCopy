@@ -68,19 +68,14 @@
 							</div>
 							<input type="password" name="u_password" id=u_password class="form-control input_pass" value="" placeholder="password">
 						</div>
-						<div class="form-group">
-							<div class="custom-control custom-checkbox">
-								<input type="checkbox" class="custom-control-input" id="customControlInline">
-								<label class="custom-control-label" for="customControlInline">Remember me</label>
-							</div>
-						</div>
-							<div class="d-flex justify-content-center mt-3 login_container">
-				 	<button type="button" name="button" class="btn login_btn" onclick="loginAction()">Login</button>
-				   </div>
+						<div class="d-flex justify-content-center mt-3 login_container">
+				 			<button type="button" name="button" class="btn btn-success" onclick="loginAction()">Login</button>
+				   		</div>
 					</form>
 				</div>
 		
 				<div class="mt-4">
+					<sec:auth
 					<div class="d-flex justify-content-center links">
 						Don't have an account? <a href="/signUp" class="ml-2">Sign Up</a>
 					</div>

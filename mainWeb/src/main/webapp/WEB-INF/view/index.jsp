@@ -6,24 +6,21 @@
 <meta charset="EUC-KR">
 <title>Insert title here</title>
 <style>
-html { 
+/* html { 
   background: url("https://picsum.photos/1920/1080"); 
-}
+} */
 </style>
 </head>
 <body >
 <jsp:include page="/WEB-INF/common/navbar.jsp"></jsp:include>
-<h1> main Web </h1>
 
-<a href=/login> 로그인 </a>
+<div class=container>
+	<br>
+	<a class="btn btn-primary" href="/products/shop" > 상품보러가기 </a>
+	
+	<br>
 
-<br>
-
-<a href="/shop" > 게시판 </a>
-
-<br>
-
-
+</div>
 
 </body>
 </html>

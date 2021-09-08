@@ -3,42 +3,53 @@
 
 <mapper namespace="src.test.product.data.ProductDAO">
     <select id="getProductList" resultType="ProductDTO">
-        SELECT * from PRODUCT
+        SELECT * from C_PRODUCT
     </select>
     
     <select id="getProduct" resultType="ProductDTO" >
-        SELECT * from PRODUCT
+        SELECT * from C_PRODUCT
         WHERE P_ID = #{p_id}
     </select>
     
     <insert id="createProduct">
-    	INSERT INTO PRODUCT
+    	INSERT INTO C_PRODUCT
     	VALUES 
     		(
     			product_id_seq.nextval
     			,#{p_title}
     			,#{p_content}
     			,to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
-    			,#{p_username}
+    			,#{u_id}
     			,#{p_price}
     		)
     </insert>
     
     <update id="updateProduct">
-    	UPDATE PRODUCT 
+    	UPDATE C_PRODUCT 
     	SET
    			 p_title 	= 	#{p_title}
    			,p_content  = 	#{p_content}
-   			,p_username =	#{p_username}
+   			,u_id		=	#{u_id}
    			,p_price	=	#{p_price}
     	WHERE
    			p_ID		=	#{p_id}
     </update>
     
     <delete id="deleteProduct">
-    	DELETE FROM PRODUCT 
+    	DELETE FROM C_PRODUCT 
     	WHERE
     		P_ID = #{p_id}
     </delete>
+    
+    <insert id="insertFile">
+    	INSERT INTO C_PRODUCT_ATTACHFILE
+    	VALUES
+    	( 
+    		product_id_seq.currval
+    		,#{p_uuid}
+    		,#{p_originalName}
+    	)
+    </insert>
+    
     
 </mapper>

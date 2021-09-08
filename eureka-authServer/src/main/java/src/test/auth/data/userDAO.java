@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 public interface userDAO{
 	
 	// 로그인
-	public userVO findByUsername(String u_name);
+	public userVO findByUsername(String u_id);
 	
 	// 회원가입
 	public int signUpUser(Map<String, String> map);

@@ -5,9 +5,9 @@ spring:
     name: auth-server
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@192.168.123.104:1521/orcl
-    username: eureka_user
-    password: eureka123!
+    url: jdbc:oracle:thin:@172.30.1.34:1521/orcl
+    username: shops
+    password: '!a4s5'
 
 server:
   port: 8010

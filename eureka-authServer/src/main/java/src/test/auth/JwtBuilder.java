@@ -52,7 +52,7 @@ public class JwtBuilder {
 	    		.setIssuedAt(new Date(nowTime)) // 토큰 발행 시간
 	    		.setExpiration(new Date(expiryTime)) // 토큰 만료 시간
 	    		.claim("u_id", userInfo.getU_id())
-	    		.claim("u_username", userInfo.getUsername())
+	    		.claim("u_nickname", userInfo.getU_nickname())
 	    		.signWith(SignatureAlgorithm.HS512, secret_key).compact();
 		
 	}

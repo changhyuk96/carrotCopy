@@ -25,13 +25,8 @@ public class AuthFilter implements GatewayFilter{
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		
 		try {
-			
 			String token = exchange.getRequest().getCookies().getFirst("jwtToken").getValue();
 			serviceUtil.validateAccessToken(token);
-			ServiceUtil.username = serviceUtil.getSubject(token);
-			
-			System.out.println(ServiceUtil.username);
-			
 		}
 		catch(Exception e) {
 			logger.info("CustomAuthFilter ::: Token Error ::: " + e.getCause() +" " + e.getLocalizedMessage());

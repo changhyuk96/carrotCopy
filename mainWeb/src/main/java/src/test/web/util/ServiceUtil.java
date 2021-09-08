@@ -49,7 +49,7 @@ public class ServiceUtil {
 	    return map;
 	}
 	
-	public ResponseEntity<?> getResponseEntity(HttpServletRequest request, HttpServletResponse response, URI url, HttpMethod method) {
+	public ResponseEntity<?> getResponseEntity(HttpServletRequest request, HttpServletResponse response, URI url, HttpMethod method, MediaType mediaType) {
 		ResponseEntity<?> responseEntity = null ;
 
 		try {
@@ -58,7 +58,7 @@ public class ServiceUtil {
 			String jwtToken = cookieStream.findFirst().get().getValue();		
 			
 			HttpHeaders headers = new HttpHeaders();
-			headers.setContentType(new MediaType(MediaType.APPLICATION_FORM_URLENCODED, Charset.forName("UTF-8")));
+			headers.setContentType(new MediaType(mediaType, Charset.forName("UTF-8")));
 			headers.add("jwtToken", jwtToken);
 			
 			RestTemplate restTemplate = new RestTemplate();

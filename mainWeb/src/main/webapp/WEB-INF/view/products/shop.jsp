@@ -31,7 +31,7 @@
                         </div>
                     </div>
                 </div>
-                <div style=text-align:right;><a class="btn btn-outline-dark mt-auto" href="/insertProduct">판매 등록</a></div>
+                <div style=text-align:right;><a class="btn btn-outline-dark mt-auto" href="/products/insertProduct">판매 등록</a></div>
             </div>
         </section>
         <!-- Footer-->

@@ -3,18 +3,19 @@
 
 <mapper namespace="src.test.auth.data.userDAO">
     <select id="findByUsername" resultType="src.test.auth.data.userVO" parameterType="string">
-        SELECT * from M_USER_table
+        SELECT * from c_users
 		WHERE u_id = #{u_id}
     </select>
     
     <insert id="signUpUser" parameterType="hashMap">
-    	INSERT INTO M_USER_TABLE
+    	INSERT INTO c_users
     	VALUES 
     		( 
     			#{u_id}
-    			,#{u_name}
+    			,#{u_nickname}
     			,#{u_password}
-				,to_char(sysdate,'YYYY-MM-DD')    			
+				,to_char(sysdate,'YYYY-MM-DD')
+				,'ROLE_USER'    			
     		)
     </insert>
 </mapper>

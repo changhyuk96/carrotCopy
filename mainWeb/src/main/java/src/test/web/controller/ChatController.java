@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class ChatController {
 		
 		
 		URI url = URI.create("http://localhost:8090/api/chat/");
-		ResponseEntity<?> responseEntity = serviceUtil.getResponseEntity(request, response, url, HttpMethod.GET);
+		ResponseEntity<?> responseEntity = serviceUtil.getResponseEntity(request, response, url, HttpMethod.GET, MediaType.APPLICATION_FORM_URLENCODED);
 		
 		return responseEntity.getBody();
 		

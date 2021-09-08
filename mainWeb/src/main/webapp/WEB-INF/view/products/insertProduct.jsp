@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
+              <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,7 @@
 	
 	window.onload = function(){
 		// input file에 change 이벤트 부여
-		const inputImage = document.getElementById("input-image")
+		const inputImage = document.getElementById("files")
 		inputImage.addEventListener("change", e => {
 		    readImage(e.target);
 		})
@@ -32,22 +34,43 @@
 	
 	
 	function insertProduct(){
-		
+				
 		let data = $('#productForm').serialize();
 		
-		console.log(data);
-		$.ajax({
-			url:"http://localhost:8002/api/product/product"
+ 		$.ajax({
+			url:"http://localhost:8090/api/product/product"
 			,type: "post"
 			,data:data
-			,xhrFields : {withCredentials : true}
+        	, xhrFields : { withCredentials : true}
 			,success: function(data){
-				console.log(data);
-			}
-			,failed: function(data){
+
+				var form = $('#productForm')[0];
+				var data2 = new FormData(form);
+
+				$.ajax({
+					type : "POST",
+					enctype: 'multipart/form-data',
+				    url: "http://localhost:8090/api/product/product/file",
+					data : data2,
+					processData: false,
+					contentType: false,
+					xhrFields : { withCredentials : true},
+					success: function (data) { 
+						// 전송 후 성공 시 실행 코드
+						alert('상품이 등록되었습니다.'); 
+						location.href= '/products/shop';
+					}, error: function (e) { 
+						// 전송 후 에러 발생 시 실행 코드
+						console.log("22ERROR : ", e); 
+					}
+				});
 				
 			}
-		}); 
+			,failed: function(data){
+				console.log(data);
+			}
+		});  
+
 	}
 
 </script>
@@ -58,15 +81,15 @@
 	<jsp:include page="/WEB-INF/common/navbar.jsp"></jsp:include>
 	<!-- Product section-->
 	<section class="py-5">
-		<div class="container px-4 px-lg-5 my-5">
-			<div class="row gx-4 gx-lg-5 align-items-center text-center">
-				<div class="col-md-6">
-				  <img style=max-width:500px;max-height:400px; id="preview-image" src="https://dummyimage.com/500x400/ffffff/000000.png&text=Insert+Image"><br>
-				  <input style="display: block;" type="file" id="input-image" style=margin-top:15px;>
-				
-				</div>
-				<div class="col-md-6">
-					<form method=post name=productForm id=productForm>
+		<form method=post name=productForm id=productForm enctype="multipart/form-data">
+			<div class="container px-4 px-lg-5 my-5">
+				<div class="row gx-4 gx-lg-5 align-items-center text-center">
+					<div class="col-md-6">
+					  <img style=max-width:500px;max-height:400px; id="preview-image" src="https://dummyimage.com/500x400/ffffff/000000.png&text=Insert+Image"><br>
+					  <input style="display: block;" type="file" name="files" id="files" style=margin-top:15px;>
+					
+					</div>
+					<div class="col-md-6">
 						<div class="fs-3 mb-3">
 							<input type=text name=p_title id=p_title placeholder=제목 style=width:100%;>
 							</div>
@@ -79,10 +102,11 @@
 								<i class="bi-cart-fill me-1"></i> 등록
 							</button>
 						</div>
-					</form>
+						<input type=hidden name=u_id id=u_id value="<sec:authentication property="principal.u_id"/>">
+					</div>
 				</div>
 			</div>
-		</div>
+		</form>
 	</section>
 	<!-- Footer-->
 	<footer class="py-5 bg-dark">

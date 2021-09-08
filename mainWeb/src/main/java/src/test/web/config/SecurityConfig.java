@@ -17,7 +17,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()				// HttpServletRequest 요청 URL에 따라 접근권한을 설정함.
-				.antMatchers("/shop/**").authenticated();
+				.antMatchers("/products/**").authenticated();
 												// anonymous() = 인증되지 않은 유저만 접근.
 		http.formLogin()
 			.loginPage("/login")				// 커스텀 로그인 페이지 경로
@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.invalidateHttpSession(true);								// 로그아웃 성공 시 세션 제거
 		
 		http
-			.cors().disable()					// cors 방지
+			.cors().and()
 			.csrf().disable()					// csrf 방지
 			.headers().frameOptions().disable(); // X-Frame-Option 비활성화
 			

@@ -30,7 +30,7 @@ import src.test.web.util.ServiceUtil;
 import src.test.web.util.userVO;
 
 @RestController
-public class AuthController {
+public class LoginController {
 
 	@Autowired
 	PasswordEncoder passEncoder;
@@ -41,7 +41,7 @@ public class AuthController {
 	RestTemplate restTemplate = new RestTemplate();
 	
 	ObjectMapper mapper = new ObjectMapper();
-
+	
 	@PostMapping("/loginAction")
 	public Object loginAction(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -58,20 +58,17 @@ public class AuthController {
 		if(!responseEntity.hasBody()) {
 			Cookie cookie = new Cookie("jwtToken", responseEntity.getHeaders().getFirst("jwtToken"));
 			
-			
 			String jwt = cookie.getValue();
-			System.out.println("token :::"+ jwt);
 			
 			Claims claims = serviceUtil.getClaims(jwt);
+			
 			userVO userinfo = new userVO();
 			userinfo.setU_id(claims.get("u_id").toString());
-			userinfo.setU_name(claims.get("u_username").toString());
+			userinfo.setU_nickname(claims.get("u_nickname").toString());
 			userinfo.setAuthorities(null);
 			
 			SecurityContext sc = SecurityContextHolder.getContext();
 			sc.setAuthentication(new UsernamePasswordAuthenticationToken(userinfo,null,userinfo.getAuthorities()));
-			
-			System.out.println(sc.getAuthentication().getName());
 			
 			cookie.setMaxAge(20*60);
 			cookie.setSecure(true);

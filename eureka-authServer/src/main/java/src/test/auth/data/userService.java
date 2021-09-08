@@ -15,9 +15,9 @@ public class userService implements UserDetailsService{
 	private userDAO dao;
 	
 	
-	public userVO findByUsername(String u_name){
+	public userVO findByUsername(String u_id){
 		
-		return dao.findByUsername(u_name);
+		return dao.findByUsername(u_id);
 	}
 	
 	public int signUpUser(Map<String, String> map) {

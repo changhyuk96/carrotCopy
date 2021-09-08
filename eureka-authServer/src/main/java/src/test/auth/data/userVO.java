@@ -13,15 +13,15 @@ import lombok.Setter;
 public class userVO implements UserDetails {
 
 	private String u_id;
-	private String u_name;
+	private String u_nickname;
 	private String u_password;
 	private String u_reg_date;
-	private Collection<GrantedAuthority> authorities;
+	private Collection<GrantedAuthority> u_authorities;
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
-		return authorities;
+		return u_authorities;
 	}
 	@Override
 	public String getPassword() {

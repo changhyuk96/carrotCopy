@@ -17,7 +17,7 @@
 				alert('ID를 입력해주세요.');
 				return;
 			}
-			if($('#u_name').val() == null || $('#u_name').val() ==''){
+			if($('#u_nickname').val() == null || $('#u_nickname').val() ==''){
 				alert('Name을 입력해주세요.');
 				return;
 			}
@@ -66,7 +66,7 @@
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-user"></i></span>
 							</div>
-							<input type="text" name="u_name" id=u_name class="form-control input_user" value="" placeholder="username">
+							<input type="text" name="u_nickname" id=u_nickname class="form-control input_user" value="" placeholder="nickname">
 						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
@@ -75,7 +75,7 @@
 							<input type="password" name="u_password" id=u_password class="form-control input_pass" value="" placeholder="password">
 						</div>
 						<div class="d-flex justify-content-center mt-3 login_container">
-				 			<button type="button" name="button" class="btn login_btn" onclick="signUpAction()">SignUp</button>
+				 			<button type="button" name="button" class="btn btn-success" onclick="signUpAction()">SignUp</button>
 				   		</div>
 					</form>
 				</div>
