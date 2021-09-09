@@ -58,7 +58,10 @@
 					success: function (data) { 
 						// 전송 후 성공 시 실행 코드
 						alert('상품이 등록되었습니다.'); 
-						location.href= '/products/shop';
+
+						setTimeout(function(){
+							location.href= '/products/shop';
+							}, 500);
 					}, error: function (e) { 
 						// 전송 후 에러 발생 시 실행 코드
 						console.log("22ERROR : ", e); 
@@ -94,7 +97,7 @@
 							<input type=text name=p_title id=p_title placeholder=제목 style=width:100%;>
 							</div>
 						<div class="fs-5 mb-5">
-							<input type=text name=p_price id=p_price placeholder="가격" style=width:100%;>
+							<input type=number name=p_price id=p_price placeholder="가격" style=width:100%;>
 						</div>
 						<textarea name=p_content id=p_content style="width:100%; height:30%; min-height:200px;" placeholder=내용></textarea>
 						<div class="d-flex" style=float:right;>

@@ -10,4 +10,7 @@ public class ProductDTO {
 	private String p_date;
 	private String u_id;
 	private String p_price;
+	
+	private ProductAttachFileDTO file;
+	private UserDTO userDTO;
 }

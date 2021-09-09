@@ -82,7 +82,6 @@ public class ProductController {
 				productAttchFileDTO.setP_originalName(multiFile.getOriginalFilename());
 				
 				File file = new File(productAttchFileDTO.getP_uuid()+"_"+productAttchFileDTO.getP_originalName() );
-				
 				multiFile.transferTo(file);
 				result = productService.insertFile(productAttchFileDTO);
 
@@ -92,8 +91,6 @@ public class ProductController {
 				} 
 			}
 		}
-		
-		System.out.println("성고오옹");
 		
 		return result >= 1 ? "success" : "failed";
 	}

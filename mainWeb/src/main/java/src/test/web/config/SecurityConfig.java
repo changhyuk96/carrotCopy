@@ -34,8 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()					// csrf 방지
 			.headers().frameOptions().disable(); // X-Frame-Option 비활성화
 			
-	    http.addFilterBefore(new CheckCookieFilter(), BasicAuthenticationFilter.class); 
-
 	}
 	
 	@Bean

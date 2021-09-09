@@ -1,7 +1,6 @@
 package src.test.auth;
 
-import java.sql.Date;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,7 +57,7 @@ public class authController {
 				}else
 					return ResponseEntity.ok().body("존재하지 않는 아이디입니다.");
 				
-				logger.info( LocalDate.now() + " [ "+userInfo.getU_id()+" ] :: jwt Token 발급");
+				logger.info( LocalDateTime.now() + " [ "+userInfo.getU_id()+" ] :: jwt Token 발급");
 				return ResponseEntity.ok().header("jwtToken", jwtToken).body(null);
 			}
 			

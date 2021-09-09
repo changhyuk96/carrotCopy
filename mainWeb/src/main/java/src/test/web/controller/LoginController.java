@@ -96,9 +96,4 @@ public class LoginController {
 		
 		return response.getBody();
 	}
-	
-	@RequestMapping("/test")
-	public Object test(HttpServletRequest request) {
-		return "HTTP test";
-	}
 }

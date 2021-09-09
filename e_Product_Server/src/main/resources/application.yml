@@ -3,7 +3,10 @@
 spring:
   application:
     name: product-api
-  
+  mvc:
+    static-path-pattern: resources/static/**
+    
+    
   # Oracle JDBC
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
@@ -36,6 +39,8 @@ mybatis:
   type-aliases-package: src.test.product.data
   mapper-locations:
   - classpath:mappers/**/*.xml
+  
+
 
   
 

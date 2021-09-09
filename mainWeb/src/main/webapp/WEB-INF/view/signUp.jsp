@@ -51,7 +51,7 @@
 			<div class="user_card">
 				<div class="d-flex justify-content-center" style="text-align: center;margin: 50px 0 50px 0;">
 					<div class="brand_logo_container">
-						<img src="https://cdn.freebiesupply.com/logos/large/2x/pinterest-circle-logo-png-transparent.png" class="brand_logo" alt="Logo" style=width:10%>
+						<img src="/resources/static/images/carrot.png" class="brand_logo" alt="Logo" style=width:20%> Carrot Market
 					</div>
 				</div>
 				<div class="d-flex justify-content-center form_container">

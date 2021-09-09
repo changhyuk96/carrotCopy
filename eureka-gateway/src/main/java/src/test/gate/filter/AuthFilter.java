@@ -25,7 +25,13 @@ public class AuthFilter implements GatewayFilter{
 	public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
 		
 		try {
-			String token = exchange.getRequest().getCookies().getFirst("jwtToken").getValue();
+			String token=null;
+			
+			token = exchange.getRequest().getHeaders().getFirst("jwtToken");
+			
+			if(token == null)
+				token = exchange.getRequest().getCookies().getFirst("jwtToken").getValue();
+			
 			serviceUtil.validateAccessToken(token);
 		}
 		catch(Exception e) {

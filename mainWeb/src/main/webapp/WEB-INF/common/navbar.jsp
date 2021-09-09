@@ -11,23 +11,40 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-<!--                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>  -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="/products">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/products/shop">Products</a></li>
+<!-- 						<li class="dropdown">
+						  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						    Dropdown button
+						  </button>
+						  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+						    <a class="dropdown-item" href="#">Action</a>
+						    <a class="dropdown-item" href="#">Another action</a>
+						    <a class="dropdown-item" href="#">Something else here</a>
+						  </div>
+						</li> -->
                     </ul>
                     <form class="d-flex">
                     	<sec:authorize access="isAuthenticated()">
-	                        <button class="btn btn-outline-dark" type="button" onclick="location.href='/logout'">
+                    	
+                    	<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+	                        <li class="dropdown">
+							  <button class="btn btn-outline-dark dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  	<sec:authentication property="principal.u_nickname"></sec:authentication>
+							  </button>
+							  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+							    <a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-in-left"></i>&nbsp; Logout</a>
+							    <a class="dropdown-item" href="#">Another action</a>
+							    <a class="dropdown-item" href="#">Something else here</a>
+							  </div>
+							</li>
+						</ul>
+                    	
+                    	
+<!-- 	                        <button class="btn btn-outline-dark" type="button" onclick="location.href='/logout'">
 	                           <i class="bi bi-box-arrow-in-left"></i>
 	                            Logout
-	                        </button>
+	                        </button> -->
+	                        
                         </sec:authorize>
                     	<sec:authorize access="isAnonymous()">
 	                        <button class="btn btn-outline-dark" type="button" onclick="location.href='/login'">
@@ -35,7 +52,10 @@
 	                            Login
 	                        </button>
                         </sec:authorize>
+                        
+
                     </form>
                 </div>
             </div>
         </nav>
+        

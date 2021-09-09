@@ -1,5 +1,6 @@
 package src.test.web.util;
 
+import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.util.Enumeration;
@@ -10,23 +11,28 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
+import org.springframework.web.client.RestTemplate;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
-import org.springframework.web.client.RestTemplate;
-
 @Service
 public class ServiceUtil {
+	
+	Logger logger = LoggerFactory.getLogger(ServiceUtil.class);
 	
 	public MultiValueMap<String, String> requestToMap(HttpServletRequest request){
 		MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -65,17 +71,36 @@ public class ServiceUtil {
 			HttpEntity<?> requests = new HttpEntity<>(headers);
 			responseEntity = restTemplate.exchange(url, method, requests, String.class);
 			
-		}catch(BadRequest e) {
+		}catch(Unauthorized e) {
 			
 			Cookie cookie = new Cookie("jwtToken", "123");
 			cookie.setMaxAge(0);
 			cookie.setPath("/");
 			response.addCookie(cookie);
+			
+			SecurityContext sc = SecurityContextHolder.getContext();
+			sc.getAuthentication().setAuthenticated(false);
+			
+			logger.info(this.getClass() +" ::: "+ e.getMessage() + " redirect login.");
+			try {
+				response.sendRedirect("/login");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			
 			return ResponseEntity.ok().body("Please Login.");
 			
 		}catch(NoSuchElementException | NullPointerException e) {
 			
-			System.out.println(this.getClass() +" ::: "+ e.getMessage());
+			logger.info(this.getClass() +" ::: "+ e.getMessage() + " redirect login.");
+			
+			try {
+				response.sendRedirect("/login");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			
 			return ResponseEntity.ok().body("Please Login.");
 		}

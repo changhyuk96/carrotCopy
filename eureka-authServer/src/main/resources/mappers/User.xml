@@ -14,7 +14,7 @@
     			#{u_id}
     			,#{u_nickname}
     			,#{u_password}
-				,to_char(sysdate,'YYYY-MM-DD')
+				,to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
 				,'ROLE_USER'    			
     		)
     </insert>

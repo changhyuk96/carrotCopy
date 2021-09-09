@@ -2,13 +2,58 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="src.test.product.data.ProductDAO">
-    <select id="getProductList" resultType="ProductDTO">
-        SELECT * from C_PRODUCT
+    <select id="getProductList" resultMap="ProductDTO">
+        SELECT 	  cp.p_id
+        		, cp.P_title
+        		, cp.p_date
+        		, TO_CHAR( cp.p_price , 'FM999,999,999,999') p_price
+        		, cp.u_id
+        		, cpa.P_UUID
+        		, cpa.P_ORIGINALNAME 
+		FROM C_PRODUCT cp, C_PRODUCT_ATTACHFILE cpa
+		WHERE cp.P_ID = cpa.P_ID
     </select>
     
-    <select id="getProduct" resultType="ProductDTO" >
-        SELECT * from C_PRODUCT
-        WHERE P_ID = #{p_id}
+    <resultMap type="ProductAttachFileDTO" id="ProductAttachFileDTO">
+    	<result column="p_uuid" property="p_uuid"/>
+    	<result column="p_originalName" property="p_originalName"/>
+    </resultMap>
+    
+    <resultMap type="UserDTO" id="UserDTO">
+    	<result column="u_id" property="u_id" />
+    	<result column="u_nickname" property="u_nickname" />
+    </resultMap>
+    
+    <resultMap type="ProductDTO" id="ProductDTO">
+    	<result column="p_id" property="p_id"/>
+    	<result column="p_title" property="p_title"/>
+    	<result column="p_content" property="p_content"/>
+    	<result column="p_date" property="p_date"/>
+    	<result column="p_price" property="p_price"/>
+    	<result column="u_id" property="u_id"/>
+    	<collection property="file" resultMap="ProductAttachFileDTO" />
+    	<collection property="userDTO" resultMap="UserDTO" />
+    </resultMap>
+    
+    <select id="getProduct" resultMap="ProductDTO" >
+		SELECT
+			cp.p_id ,
+			cp.p_title ,
+			cp.p_content ,
+			cp.p_date ,
+			TO_CHAR( cp.p_price , 'FM999,999,999,999') p_price ,
+			cp.u_id ,
+			cpa.P_UUID ,
+			cpa.P_ORIGINALNAME,
+			cu.U_NICKNAME 
+		FROM
+			C_PRODUCT cp,
+			C_PRODUCT_ATTACHFILE cpa,
+			C_USERS cu 
+		WHERE
+			cp.P_ID = cpa.P_ID
+			AND cp.U_ID = cu.U_ID 
+			AND cp.p_id = ${p_id}
     </select>
     
     <insert id="createProduct">
@@ -20,7 +65,7 @@
     			,#{p_content}
     			,to_char(sysdate,'YYYY-MM-DD HH24:MI:SS')
     			,#{u_id}
-    			,#{p_price}
+    			,to_number(#{p_price})
     		)
     </insert>
     
