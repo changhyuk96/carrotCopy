@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>          <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,19 +27,19 @@
                         <h2 class="display-5 fw-bolder">${productDetail.p_title }</h2>
                         <hr>
                         <div class="fs-5 mb-5">
-                            <span> £Ü ${productDetail.p_price } ¿ø</span>
+                            <span> ï¿¦ ${productDetail.p_price } ì›</span>
                             <span style=float:right;margin-right:10px;font-size:14px;text-align:right;>
-                            	µî·Ï ³¯Â¥: ${productDetail.p_date }<br>
-                            	ÀÛ¼ºÀÚ: ${productDetail.userDTO.u_nickname }
+                            	ë“±ë¡ ë‚ ì§œ: ${productDetail.p_date }<br>
+                            	ì‘ì„±ì: ${productDetail.userDTO.u_nickname }
                             </span> 
                         </div>
                         <div class="fs-5 mb-5">
                         	<pre>${productDetail.p_content }</pre>
                         </div>	
                         <div class="d-flex">
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick='location.href="/chats/chatRoom?u_id_target=${productDetail.u_id}&u_id=<sec:authentication property="principal.u_id"></sec:authentication>"'>
 								<i class="bi bi-chat-dots"></i>
-                                ${productDetail.userDTO.u_nickname } ´Ô²² ¿¬¶ôÇÏ±â
+                                ${productDetail.userDTO.u_nickname } ë‹˜ê»˜ ì—°ë½í•˜ê¸°
                             </button>
                         </div>
                     </div>

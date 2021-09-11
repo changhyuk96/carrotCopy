@@ -22,7 +22,7 @@ spring:
       
 # Encoding 설정 :: server.servlet.endoing.charset      
 server:
-  port: 8002
+  port: 8001
   servlet:
     encoding:
       charset: UTF-8

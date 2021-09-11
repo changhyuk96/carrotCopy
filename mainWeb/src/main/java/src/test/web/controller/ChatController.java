@@ -1,23 +1,21 @@
 package src.test.web.controller;
 
-import java.net.URI;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import src.test.web.util.ServiceUtil;
 
-@RequestMapping("/api/chat")
-@RestController
+@RequestMapping("/chats")
+@Controller
 public class ChatController {
 	
 	
@@ -26,15 +24,15 @@ public class ChatController {
 	@Autowired
 	ServiceUtil serviceUtil; 
 	
-	@GetMapping("/")
-	public Object getList(HttpServletRequest request, HttpServletResponse response) {
+	@GetMapping("/chatRoom")
+	public Object chatRoom(HttpServletRequest request, HttpServletResponse response, Model model) {
 		
+		model.addAttribute("room_id", UUID.randomUUID());
+		model.addAttribute("u_id", request.getParameter("u_id"));
+		model.addAttribute("u_nickname", request.getParameter("u_nickname"));	
+		model.addAttribute("u_id_target", request.getParameter("u_id_target"));	
 		
-		URI url = URI.create("http://localhost:8090/api/chat/");
-		ResponseEntity<?> responseEntity = serviceUtil.getResponseEntity(request, response, url, HttpMethod.GET, MediaType.APPLICATION_FORM_URLENCODED);
-		
-		return responseEntity.getBody();
-		
+		return "/chats/chatRoom";
 	}
 	
 }
