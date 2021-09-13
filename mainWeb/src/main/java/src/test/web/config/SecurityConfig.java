@@ -17,7 +17,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()				// HttpServletRequest 요청 URL에 따라 접근권한을 설정함.
-				.antMatchers("/products/**").authenticated();
+				.antMatchers("/products/**").authenticated()
+				.antMatchers("/chats/**").authenticated();
 												// anonymous() = 인증되지 않은 유저만 접근.
 		http.formLogin()
 			.loginPage("/login")				// 커스텀 로그인 페이지 경로

@@ -42,8 +42,14 @@ public class ChatController {
 	@RequestMapping("/rooms")
 	public Object rooms(HttpServletRequest request) {
 		
-		
 		return couchRepo.userChatroomList(request.getParameter("u_id"));
+	}
+	
+	
+	@RequestMapping("/room")
+	public Object room(HttpServletRequest request) {
+		
+		return couchRepo.getChatting(request.getParameter("room_id"));
 	}
 	
 	

@@ -1,48 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+	pageEncoding="EUC-KR"%>
+	                        <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
 
-<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
-<script src=/resources/static/js/stomp.js></script>
-
+<link href="/resources/static/css/style3.css" rel="stylesheet" />
 <script>
 
-
-	let stomp = null;
-	let room_id = '${room_id}';
 	let u_id = '${u_id}';
-	let u_nickname = '${u_nickname}';
-	let u_id_target = '${u_id_target}';
-	
-	
+
 	function connect(){
 		
 		stomp = Stomp.over(new SockJS('http://localhost:8090/api/chat/websocket'));
 		
 		// Connection이 맺어지면 실행됨.
 		stomp.connect({}, function(frame){
-			
-			console.log('hi');
+
 			
 		}, function(error) {
 			alert("STOMP error " + error);
 			
 		}); 
 	}
-	
-	
-	
-	function disconnect() {
-	    if (stomp != null) {
-	    	stomp.disconnect();
-		    console.log("Disconnected");
-	    }
-	}
-
 	
 	function subscribe(){
 		// 구독
@@ -53,26 +33,59 @@
 
 		stomp.send('/pub/chat/enter', {}, json);
 	}
-	
-	
-	function sendMessage(){
 
-		let json = JSON.stringify({room_id: room_id, u_id: u_id, u_id_target: u_id_target, message: 'asdf'});
+	function moveChatRoom(room_id){
 
+		location.href= '/chats/chatting?room_id='+room_id+'&u_id='+u_id;
 		
-		stomp.send("/pub/chat/message", {}, json);
 	}
 
 	
 </script>
+
+
+
 </head>
 <body>
-<jsp:include page="/WEB-INF/common/navbar.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/common/navbar.jsp"></jsp:include>
 
-	<button id="disconnect" class="btn btn-primary" type="submit" onclick="connect()">Connect </button><br>
-	<button id="disconnect" class="btn btn-default" type="submit" onclick="disconnect()">Disconnect </button><br>
-	<button id="disconnect" class="btn btn-default" type="submit" onclick="subscribe()">subscribe </button>
-	<button id="disconnect" class="btn btn-default" type="submit" onclick="sendMessage()">send Message </button>
+	<div class="container" style="text-align: -webkit-center;">
+		<br>
+		<div class="messaging">
+			<div class="inbox_msg">
+				<div class="inbox_people">
 
+					<div class="headind_srch">
+						<div class="recent_heading">
+							<h4 style=float:left;>목록</h4>
+						</div>
+					</div>
+
+					<div class="inbox_chat">
+						<!-- <div class="chat_list active_chat"> :: active 활성화 -->
+						
+						<c:forEach var="chat" items="${chatList}">
+							<div class="chat_list" onclick="moveChatRoom('${chat.room_id}')" style="cursor: pointer;">
+								<div class="chat_people">
+									<div class="chat_img">
+										<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
+									</div>
+									<div class="chat_ib">
+										<h5>
+											<span style=float:left;font-size:15px;font-weight:bold;>${chat.u_id }</span>
+											<span class="chat_date">${chat.message.time }</span>
+										</h5>
+										<br>
+										<p>${chat.message.message }</p>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

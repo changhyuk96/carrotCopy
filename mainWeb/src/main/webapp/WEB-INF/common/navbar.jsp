@@ -33,17 +33,10 @@
 							  </button>
 							  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 							    <a class="dropdown-item" href="/logout"><i class="bi bi-box-arrow-in-left"></i>&nbsp; Logout</a>
-							    <a class="dropdown-item" href="#">Another action</a>
-							    <a class="dropdown-item" href="#">Something else here</a>
+							    <a class="dropdown-item" href="/chats/chatRoom?u_id=<sec:authentication property="principal.u_id"></sec:authentication>"><i class="bi bi-chat-dots"></i>&nbsp; 채팅방</a>
 							  </div>
 							</li>
 						</ul>
-                    	
-                    	
-<!-- 	                        <button class="btn btn-outline-dark" type="button" onclick="location.href='/logout'">
-	                           <i class="bi bi-box-arrow-in-left"></i>
-	                            Logout
-	                        </button> -->
 	                        
                         </sec:authorize>
                     	<sec:authorize access="isAnonymous()">

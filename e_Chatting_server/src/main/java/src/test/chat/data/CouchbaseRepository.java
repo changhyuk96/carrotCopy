@@ -1,11 +1,12 @@
 package src.test.chat.data;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,8 @@ public class CouchbaseRepository {
 	private CouchbaseConfig couchbaseConfig;
 	private Bucket bucket;
 	private Collection collection;
+	
+	JSONParser parser = new JSONParser();
 	
 	// 구독했을 때 Couchbase에 저장.
 	public void subscribe(MessageVO message) {
@@ -82,7 +85,7 @@ public class CouchbaseRepository {
 		
 		
 		try {
-			QueryResult result = bucket.defaultScope().query("select room_id, ARRAY_EXCEPT(u_id,['"+u_id+"']) u_id from `ChatBucket`._default._default where ARRAY_CONTAINS(u_id, '"+u_id+"') = true",
+			QueryResult result = bucket.defaultScope().query("select room_id, ARRAY_EXCEPT(u_id,['"+u_id+"']) u_id, message[-1] message from `ChatBucket`._default._default where ARRAY_CONTAINS(u_id, '"+u_id+"') = true",
 															QueryOptions.queryOptions().parameters(JsonArray.from(u_id).add(u_id)));
 			for(JsonObject js : result.rowsAsObject()) {
 				
@@ -90,6 +93,7 @@ public class CouchbaseRepository {
 			
 				json.put("room_id", js.get("room_id").toString());
 				json.put("u_id", ((JsonArray)js.get("u_id")).get(0));
+				json.put("message", js.get("message").toString());
 				
 				jsonArray.add(json);
 			}
@@ -100,6 +104,24 @@ public class CouchbaseRepository {
 		
 		
 		return jsonArray;
+	}
+	
+	public Object getChatting(String room_id) {
+		bucketCheck();
+		
+		JsonObject jsonObj = collection.get(room_id).contentAsObject();
+		JSONObject json= null;
+		JSONArray array = null;
+		try {
+			json = (JSONObject) parser.parse(jsonObj.toString());
+			array = (JSONArray)json.get("message");
+			
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return array;
 	}
 
 	public void bucketCheck() {
