@@ -16,8 +16,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import src.test.web.util.ServiceUtil;
@@ -82,6 +84,11 @@ public class ChatController {
 		}
 		
 		return "/chats/chatting";
+	}
+	
+	@ExceptionHandler(HttpStatusCodeException.class)
+	public Object serviceError() {
+		return "/errors/serviceError";
 	}
 	
 }

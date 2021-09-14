@@ -10,7 +10,7 @@
 
 	
 	<script>
-	
+
 		function loginAction(){
 			
 			if($('#u_id').val() == null || $('#u_id').val() ==''){
@@ -75,12 +75,8 @@
 				</div>
 		
 				<div class="mt-4">
-					<sec:auth
 					<div class="d-flex justify-content-center links">
 						Don't have an account? <a href="/signUp" class="ml-2">Sign Up</a>
-					</div>
-					<div class="d-flex justify-content-center links">
-						<a href="#">Forgot your password?</a>
 					</div>
 				</div>
 			</div>

@@ -13,7 +13,6 @@ img{ max-width:100%;}
 }
 .top_spac{ margin: 20px 0 0;}
 
-
 .recent_heading {float: left; width:40%;}
 .srch_bar {
   display: inline-block;
@@ -54,7 +53,7 @@ img{ max-width:100%;}
 .chat_list {
   border-bottom: 1px solid #c4c4c4;
   margin: 0;
-  padding: 18px 16px 10px;
+  padding: 18px 16px 10px 16px;
 }
 .inbox_chat { height: 550px; overflow-y: scroll;}
 

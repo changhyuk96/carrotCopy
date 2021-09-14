@@ -21,11 +21,11 @@ public class ChatController {
 
 	// 특정 Broker로 메세지 전달
 	private final SimpMessagingTemplate template;
-
+	
 	@Autowired
 	CouchbaseRepository couchRepo;
 	
-	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss");
+	DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 	// 메세지 매핑.
 	@MessageMapping(value="/chat/message")

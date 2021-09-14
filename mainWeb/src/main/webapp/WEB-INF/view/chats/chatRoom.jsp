@@ -16,6 +16,16 @@
 		
 	}
 
+	function deleteChatRoom(){
+
+		event.cancelBubble = true;
+
+		if(confirm('채팅방을 나가시겠습니까?')){
+			
+
+		}
+	}
+
 	
 </script>
 
@@ -39,9 +49,13 @@
 
 					<div class="inbox_chat">
 						<!-- <div class="chat_list active_chat"> :: active 활성화 -->
-						
 						<c:forEach var="chat" items="${chatList}">
 							<div class="chat_list" onclick="moveChatRoom('${chat.room_id}','${chat.u_id }')" style="cursor: pointer;">
+							<span class=close_btn style=float:right;>
+							<!-- 	<button class="btn" type=button onclick="deleteChatRoom()">
+									<i class="bi bi-x-square"></i>
+								</button> -->
+							</span>
 								<div class="chat_people">
 									<div class="chat_img">
 										<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">

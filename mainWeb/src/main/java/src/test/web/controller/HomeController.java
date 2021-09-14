@@ -33,6 +33,11 @@ public class HomeController {
 	public String signUp() {
 		return "signUp";
 	}
+	
+	@RequestMapping("/errors/serviceError")
+	public String serviceError() {
+		return "/errors/serviceError";
+	}
 
 	
 }

@@ -31,8 +31,7 @@
 		    readImage(e.target);
 		})
 	}
-	
-	
+
 	function insertProduct(){
 				
 		let data = $('#productForm').serialize();
@@ -97,7 +96,7 @@
 							<input type=text name=p_title id=p_title placeholder=제목 style=width:100%;>
 							</div>
 						<div class="fs-5 mb-5">
-							<input type=number name=p_price id=p_price placeholder="가격" style=width:100%;>
+							<input type=number name=p_price id=p_price placeholder="가격" style=width:100%; >
 						</div>
 						<textarea name=p_content id=p_content style="width:100%; height:30%; min-height:200px;" placeholder=내용></textarea>
 						<div class="d-flex" style=float:right;>

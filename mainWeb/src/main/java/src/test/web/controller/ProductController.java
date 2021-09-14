@@ -15,8 +15,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.client.HttpStatusCodeException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -36,13 +38,11 @@ public class ProductController {
 
 	
 	@RequestMapping("/shop")
-	public Object shop(Model model, HttpServletRequest request, HttpServletResponse response){
+	public Object shop(Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		URI url = URI.create("http://localhost:8090/api/product/products");
-		
-		ResponseEntity<?> responseEntity = serviceUtil.getResponseEntity(request, response, url, HttpMethod.GET, MediaType.APPLICATION_FORM_URLENCODED);
-		
 		try {
+			ResponseEntity<?> responseEntity = serviceUtil.getResponseEntity(request, response, url, HttpMethod.GET, MediaType.APPLICATION_FORM_URLENCODED);
 			JSONArray json = (JSONArray)parser.parse(responseEntity.getBody().toString());
 			
 			model.addAttribute("productList", json);
@@ -77,5 +77,11 @@ public class ProductController {
 	@GetMapping("/insertProduct")
 	public String insertProduct() {
 		return "/products/insertProduct";
+	}
+	
+	
+	@ExceptionHandler(HttpStatusCodeException.class)
+	public Object serviceError() {
+		return "/errors/serviceError";
 	}
 }
