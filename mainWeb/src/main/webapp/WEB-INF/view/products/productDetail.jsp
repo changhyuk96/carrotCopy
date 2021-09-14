@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>          <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+    <%@taglib  uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
 <!DOCTYPE html>
 <html>
@@ -13,6 +14,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="/resources/static/css/styles2.css" rel="stylesheet" />
+        
 </head>
     <body>
         <!-- Navigation-->
@@ -36,12 +38,17 @@
                         <div class="fs-5 mb-5">
                         	<pre>${productDetail.p_content }</pre>
                         </div>	
-                        <div class="d-flex">
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick='location.href="/chats/chatRoom?u_id_target=${productDetail.u_id}&u_id=<sec:authentication property="principal.u_id"></sec:authentication>"'>
-								<i class="bi bi-chat-dots"></i>
-                                ${productDetail.userDTO.u_nickname } 님께 연락하기
-                            </button>
-                        </div>
+                        <sec:authentication property="principal.u_id" var="u_id"/>
+                        
+                   		<c:if test="${u_id ne productDetail.userDTO.u_id}">
+                   		   <div class="d-flex">
+	                            <button class="btn btn-outline-dark flex-shrink-0" type="button" onclick='location.href="/chats/chatting?u_id_target=${productDetail.u_id}&u_id=<sec:authentication property="principal.u_id"></sec:authentication>"'>
+									<i class="bi bi-chat-dots"></i>
+	                                ${productDetail.userDTO.u_nickname } 님께 연락하기
+	                            </button>
+                       		</div>
+                   		</c:if>
+                     
                     </div>
                 </div>
             </div>

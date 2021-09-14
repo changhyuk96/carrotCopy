@@ -10,33 +10,9 @@
 
 	let u_id = '${u_id}';
 
-	function connect(){
-		
-		stomp = Stomp.over(new SockJS('http://localhost:8090/api/chat/websocket'));
-		
-		// Connection이 맺어지면 실행됨.
-		stomp.connect({}, function(frame){
+	function moveChatRoom(room_id, u_id_target){
 
-			
-		}, function(error) {
-			alert("STOMP error " + error);
-			
-		}); 
-	}
-	
-	function subscribe(){
-		// 구독
-		stomp.subscribe("/topic/chat/room/"+room_id);
-
-		let json = JSON.stringify({room_id: room_id, u_id: u_id, u_id_target: u_id_target});
-		console.log(json)
-
-		stomp.send('/pub/chat/enter', {}, json);
-	}
-
-	function moveChatRoom(room_id){
-
-		location.href= '/chats/chatting?room_id='+room_id+'&u_id='+u_id;
+		location.href= '/chats/chatting?room_id='+room_id+'&u_id='+u_id+'&u_id_target='+u_id_target;
 		
 	}
 
@@ -65,7 +41,7 @@
 						<!-- <div class="chat_list active_chat"> :: active 활성화 -->
 						
 						<c:forEach var="chat" items="${chatList}">
-							<div class="chat_list" onclick="moveChatRoom('${chat.room_id}')" style="cursor: pointer;">
+							<div class="chat_list" onclick="moveChatRoom('${chat.room_id}','${chat.u_id }')" style="cursor: pointer;">
 								<div class="chat_people">
 									<div class="chat_img">
 										<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">
@@ -80,7 +56,12 @@
 									</div>
 								</div>
 							</div>
+							
 						</c:forEach>
+						
+						<c:if test="${chatList.size() < 1 }">
+							<span> 채팅방이 없습니다.</span>
+						</c:if>
 
 					</div>
 				</div>

@@ -9,4 +9,5 @@ public class MessageVO {
 	private String u_id;
 	private String u_id_target;
 	private String message;
+	private String time;
 }

@@ -28,7 +28,7 @@
                     	
                     	<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 	                        <li class="dropdown">
-							  <button class="btn btn-outline-dark dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							  <button class="btn btn-outline-dark dropdown-toggle " type="button" id="dropdownMenuButton" data-toggle="dropdown">
 							  	<sec:authentication property="principal.u_nickname"></sec:authentication>
 							  </button>
 							  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
