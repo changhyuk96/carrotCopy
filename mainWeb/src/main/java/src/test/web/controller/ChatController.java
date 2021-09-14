@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,18 +65,20 @@ public class ChatController {
 		
 		ResponseEntity<?> responses = serviceUtil.getResponseEntity(request, response, url, HttpMethod.GET, MediaType.APPLICATION_JSON);
 		
-		if(request.getParameter("room_id") == null)
+		// 첫 채팅일 때
+		if(responses.getBody().toString().equals("firstChatting"))
 			model.addAttribute("room_id", UUID.randomUUID());
-		else
+		else // 채팅방에서 들어갈 때
 			model.addAttribute("room_id", request.getParameter("room_id"));
 
 		model.addAttribute("u_id", request.getParameter("u_id"));
 		model.addAttribute("u_id_target", request.getParameter("u_id_target"));
 
 		try {
+			JSONObject jsonObj = (JSONObject)parser.parse(responses.getBody().toString());
+			JSONArray json = (JSONArray)jsonObj.get("message"); 
 			
-			JSONArray json = (JSONArray)parser.parse(responses.getBody().toString());
-			
+			model.addAttribute("room_id", jsonObj.get("room_id").toString());
 			model.addAttribute("chatHistory", json);
 		} catch (ParseException e) {
 			

@@ -101,8 +101,6 @@ public class CouchbaseRepository {
 			
 			System.out.println(e.toString());
 		}
-		
-		
 		return jsonArray;
 	}
 	
@@ -125,9 +123,8 @@ public class CouchbaseRepository {
 			JSONArray array = null;
 		
 			json = (JSONObject) parser.parse(jsonObj.toString());
-			array = (JSONArray)json.get("message");
-			
-			return array;
+
+			return json;
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
